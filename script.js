@@ -9,8 +9,6 @@ const firebaseConfig = {
 };
 
 
-
-
 // Inizializza l'app Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -27,6 +25,6 @@ document.getElementById("googleSignIn").addEventListener("click", () => {
     })
     .catch((error) => {
       console.error("Errore durante il login:", error.message);
-      alert("Errore durante il login. Riprova.");
+      alert("Errore durante il login. Riprova");
     });
 });

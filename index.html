@@ -3,54 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login with Google</title>
+  <title>Welcome</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="login-container">
     <div class="login-card">
-      <h1 class="title">Sign in</h1>
+      <h1 class="title">Sign in or Continue</h1>
       <button id="googleSignIn" class="google-button">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
-        Sign in with Google
+        Sign in or Sign up with Google
       </button>
+      <button id="continueGuest" class="guest-button">Continue as Guest</button>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
 
     // Configura Firebase
     const firebaseConfig = {
-  apiKey: "AIzaSyCSK6ACbpBq_O--x0vgYOYhKYGdE7ySMdI",
-  authDomain: "hfarmai-8bdf5.firebaseapp.com",
-  projectId: "hfarmai-8bdf5",
-  storageBucket: "hfarmai-8bdf5.firebasestorage.app",
-  messagingSenderId: "791164269090",
-  appId: "1:791164269090:web:486de7149aa406ead2507b",
-  measurementId: "G-3536PC715E"
-};
-
-
+      apiKey: "AIzaSyCSK6ACbpBq_O--x0vgYOYhKYGdE7ySMdI",
+      authDomain: "hfarmai-8bdf5.firebaseapp.com",
+      projectId: "hfarmai-8bdf5",
+      storageBucket: "hfarmai-8bdf5.firebasestorage.app",
+      messagingSenderId: "791164269090",
+      appId: "1:791164269090:web:486de7149aa406ead2507b",
+      measurementId: "G-3536PC715E"
+    };
 
     // Inizializza Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // Bottone di login
+    // Bottone di login con Google
     document.getElementById("googleSignIn").addEventListener("click", () => {
       signInWithPopup(auth, provider)
         .then((result) => {
           const user = result.user;
-          alert(`Benvenuto, ${user.displayName}!`);
+          redirectToWelcomePage(user.displayName); // Reindirizza con il nome utente
         })
         .catch((error) => {
           console.error("Errore durante il login:", error.message);
-          alert("Errore durante il login. Riprova. ", error.message);
+          alert("Errore durante il login. Riprova.");
         });
     });
+
+    // Bottone "Continua come ospite"
+    document.getElementById("continueGuest").addEventListener("click", () => {
+      redirectToWelcomePage("Guest"); // Reindirizza come ospite
+    });
+
+    // Funzione per reindirizzare alla schermata di benvenuto
+    function redirectToWelcomePage(userName) {
+      sessionStorage.setItem("userName", userName); // Salva il nome utente
+      window.location.href = "welcome.html"; // Reindirizza alla pagina welcome
+    }
   </script>
 </body>
 </html>
