@@ -14,7 +14,7 @@
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
         Sign in or Sign up with Google
       </button>
-      <button id="continueGuest" class="guest-button">Continue as Guest</button>
+      <button id="continueGuest" class="guest-button">Continue as Guestssss</button>
     </div>
   </div>
 
@@ -37,6 +37,12 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
+
+    // Controlla se l'utente ha già effettuato l'accesso o scelto "Guest"
+    const userName = sessionStorage.getItem("userName");
+    if (userName) {
+      window.location.href = "welcome.html"; // Reindirizza alla schermata welcome
+    }
 
     // Bottone di login con Google
     document.getElementById("googleSignIn").addEventListener("click", () => {
